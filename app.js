@@ -6,8 +6,8 @@ const state = {
 const LOCAL_DEFAULT_CSV = "./compliance_inventory.csv";
 
 const palette = [
-  "#1b7f6d", "#d05f2d", "#de9f21", "#4c8792", "#9c6a39", "#2b5f9e",
-  "#8f4b6e", "#6a8d2f", "#bf5064", "#8867b7", "#b95f3d", "#177081"
+  "#111111", "#2a2a2a", "#3a3a3a", "#4a4a4a", "#5a5a5a", "#6a6a6a",
+  "#7a7a7a", "#8a8a8a", "#9a9a9a", "#aaaaaa", "#bbbbbb", "#cccccc"
 ];
 
 const statusEl = document.getElementById("status");
@@ -16,7 +16,6 @@ const urlInput = document.getElementById("sheetUrl");
 const fileInput = document.getElementById("csvFile");
 const primarySelect = document.getElementById("primarySelect");
 const secondarySelect = document.getElementById("secondarySelect");
-const limitSelect = document.getElementById("limitSelect");
 
 function setStatus(message, isError = false) {
   statusEl.textContent = message;
@@ -204,17 +203,6 @@ function fillSelect(select, options) {
 function updateKpis(rows, fields) {
   document.getElementById("kpiTotal").textContent = rows.length.toLocaleString();
   document.getElementById("kpiFields").textContent = fields.length.toLocaleString();
-
-  const policyField = fields.find((f) => /policy/i.test(f));
-  const standardField = fields.find((f) => /standard/i.test(f));
-
-  document.getElementById("kpiPolicies").textContent = policyField
-    ? new Set(rows.map((r) => r[policyField]).filter(Boolean)).size.toLocaleString()
-    : "N/A";
-
-  document.getElementById("kpiStandards").textContent = standardField
-    ? new Set(rows.map((r) => r[standardField]).filter(Boolean)).size.toLocaleString()
-    : "N/A";
 }
 
 function renderBarChart(items, keyName) {
@@ -275,7 +263,7 @@ function renderDonut(items, keyName) {
   base.setAttribute("cy", `${size / 2}`);
   base.setAttribute("r", `${r}`);
   base.setAttribute("fill", "none");
-  base.setAttribute("stroke", "#efe8de");
+  base.setAttribute("stroke", "#e2e2e2");
   base.setAttribute("stroke-width", "28");
   svg.appendChild(base);
 
@@ -302,7 +290,7 @@ function renderDonut(items, keyName) {
   center.setAttribute("text-anchor", "middle");
   center.setAttribute("font-size", "20");
   center.setAttribute("font-weight", "700");
-  center.setAttribute("fill", "#243532");
+  center.setAttribute("fill", "#111111");
   center.textContent = total;
   svg.appendChild(center);
 
@@ -371,8 +359,8 @@ function renderHeatmap(rows, aKey, bKey, limit) {
       const v = matrix[a][b];
       const intensity = v / max;
       td.textContent = String(v);
-      td.style.background = `rgba(27, 127, 109, ${Math.max(0.06, intensity * 0.84)})`;
-      td.style.color = intensity > 0.65 ? "#ffffff" : "#21312d";
+      td.style.background = `rgba(17, 17, 17, ${Math.max(0.06, intensity * 0.84)})`;
+      td.style.color = intensity > 0.65 ? "#ffffff" : "#111111";
       tr.appendChild(td);
     });
 
@@ -420,7 +408,7 @@ function renderPreview(headers, rows, maxRows = 12) {
 function updateVisuals() {
   const primary = primarySelect.value;
   const secondary = secondarySelect.value;
-  const limit = Number(limitSelect.value);
+  const limit = 12;
 
   if (!primary || !secondary || !state.rows.length) return;
 
@@ -544,7 +532,6 @@ fileInput.addEventListener("change", async (event) => {
 loadBtn.addEventListener("click", loadFromUrl);
 primarySelect.addEventListener("change", updateVisuals);
 secondarySelect.addEventListener("change", updateVisuals);
-limitSelect.addEventListener("change", updateVisuals);
 
 setStatus("Enter a Google Sheet URL and click Load, or upload a CSV.");
 loadLocalDefaultCsv().then((loaded) => {
