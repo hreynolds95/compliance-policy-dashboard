@@ -6,8 +6,8 @@ const state = {
 const LOCAL_DEFAULT_CSV = "./compliance_inventory.csv";
 
 const palette = [
-  "#111111", "#2a2a2a", "#3a3a3a", "#4a4a4a", "#5a5a5a", "#6a6a6a",
-  "#7a7a7a", "#8a8a8a", "#9a9a9a", "#aaaaaa", "#bbbbbb", "#cccccc"
+  "#f2f2f2", "#d9d9d9", "#c2c2c2", "#aaaaaa", "#949494", "#7f7f7f",
+  "#6a6a6a", "#595959", "#4b4b4b", "#3f3f3f", "#353535", "#2d2d2d"
 ];
 
 const statusEl = document.getElementById("status");
@@ -263,7 +263,7 @@ function renderDonut(items, keyName) {
   base.setAttribute("cy", `${size / 2}`);
   base.setAttribute("r", `${r}`);
   base.setAttribute("fill", "none");
-  base.setAttribute("stroke", "#e2e2e2");
+  base.setAttribute("stroke", "#2a2a2a");
   base.setAttribute("stroke-width", "28");
   svg.appendChild(base);
 
@@ -290,7 +290,7 @@ function renderDonut(items, keyName) {
   center.setAttribute("text-anchor", "middle");
   center.setAttribute("font-size", "20");
   center.setAttribute("font-weight", "700");
-  center.setAttribute("fill", "#111111");
+  center.setAttribute("fill", "#f2f2f2");
   center.textContent = total;
   svg.appendChild(center);
 
@@ -359,8 +359,8 @@ function renderHeatmap(rows, aKey, bKey, limit) {
       const v = matrix[a][b];
       const intensity = v / max;
       td.textContent = String(v);
-      td.style.background = `rgba(17, 17, 17, ${Math.max(0.06, intensity * 0.84)})`;
-      td.style.color = intensity > 0.65 ? "#ffffff" : "#111111";
+      td.style.background = `rgba(242, 242, 242, ${Math.max(0.08, intensity * 0.72)})`;
+      td.style.color = intensity > 0.65 ? "#050505" : "#dcdcdc";
       tr.appendChild(td);
     });
 
